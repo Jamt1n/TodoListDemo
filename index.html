@@ -67,11 +67,10 @@
       let checkAll = document.querySelector("#checkAll");
       let isCheckedAll = ()=>data.every(item=>item.checked);
 
-
       let render = (data) => {
         let str = "";
         data.forEach(v => {
-          str += `<li>
+          str += `<li>${v.id}
           <input type="checkbox" ${v.checked ? 'checked' : ''} />
           <span>${v.title}</span>
           ${v.collect ? '<a href="javascript:;" class="cancelCollect">取消收藏</a>' : '<a href="javascript:;" class="collect">收藏</a>'}
@@ -120,6 +119,24 @@
               })
               render(data);
             }
+
+            document.querySelector('#remove').onclick = function() {
+              let newData = data.filter(item=>item.checked==false)
+              render(newData)
+            }
+
+            document.querySelector('#add').onclick = function() {
+              let title = document.querySelector('#newInfo').value
+              data.push({
+                id:data.length,
+                title,
+                checked:false,
+                collect:false,
+              })
+              document.querySelector('#newInfo').value = ''
+              render(data)
+            }
+            
           })
       }
       render(data)
